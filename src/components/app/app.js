@@ -6,30 +6,35 @@ import ItemList from '../item-list';
 import PersonDetails from '../person-details';
 
 import './app.css';
+import ErrorButton from '../error-button';
+import ErrorIndicator from '../error-indicator';
+import PeoplePage from '../people-page/people-page';
 
 class App extends React.Component {
 
   state = {
-    itemSelected: null
+    hasError: false
   }
 
-  onItemSelected = (id) =>{
-    this.setState({itemSelected: id})
+  componentDidCatch (error, info) {
+    console.error('Information of error:', info);
+    this.setState({hasError: true});
   }
+
+
   render() {
+
+    if (this.state.hasError) {
+      return <ErrorIndicator/>
+    }
+
     return (
       <div>
         <Header />
         <RandomPlanet />
+        <ErrorButton/>
 
-        <div className="row mb2">
-          <div className="col-md-6">
-            <ItemList onItemSelected={this.onItemSelected} />
-          </div>
-          <div className="col-md-6">
-            <PersonDetails personId={this.state.itemSelected} />
-          </div>
-        </div>
+        <PeoplePage/>
       </div>
     );
   }
