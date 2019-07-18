@@ -5,6 +5,20 @@ import SwapiService from '../../services/swapi-service';
 import Spinner from '../spinner';
 import ErrorButton from '../error-button';
 
+const Record = ({item, field, label}) => {
+
+  return (
+    <li className="list-group-item">
+      <span className="term">{label}</span>
+      <span>{item[field]}</span>
+    </li>
+  )
+};
+
+export {
+  Record
+};
+
 export default class ItemDetails extends Component {
 
   state = {
@@ -45,26 +59,21 @@ export default class ItemDetails extends Component {
     if (!this.state.item || this.state.loading) {
       return(<Spinner/>)
     }
-    const {item:{id, name, gender, birthYear, eyeColor},image} = this.state;
+  
+    const {item, image} = this.state;
+    const listInner = (
+      React.Children.map(this.props.children, (child) => {
+        return React.cloneElement(child, {item});
+      })
+    )
     return (
       <div className="person-details card">
         <img className="person-image" alt='Item' src={image} />
 
         <div className="card-body">
-          <h4>{name}</h4>
+          <h4>{item.name}</h4>
           <ul className="list-group list-group-flush">
-            <li className="list-group-item">
-              <span className="term">Gender</span>
-              <span>{gender}</span>
-            </li>
-            <li className="list-group-item">
-              <span className="term">Birth Year</span>
-              <span>{birthYear}</span>
-            </li>
-            <li className="list-group-item">
-              <span className="term">Eye Color</span>
-              <span>{eyeColor}</span>
-            </li>
+            {listInner}
           </ul>
         <ErrorButton/>
         </div>
