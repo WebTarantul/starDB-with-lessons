@@ -27,11 +27,17 @@ export default class PeoplePage extends Component {
 
   render() {
 
-    if (this.state.hasError) {
-      return (
-        <ErrorIndicator/>
-      )
-    }
+    const peopleList = (<ItemList  onItemSelected={this.onItemSelected} 
+                                    getData={this.swapiService.getAllPeople} >
+
+                            {(i) => `${i.name} (${i.birthYear})`}
+
+                        </ItemList>);
+    
+    const personDetails = ( 
+                          <ErrorBoundry>
+                            <PersonDetails personId={this.state.itemSelected} />
+                          </ErrorBoundry>)
 
     return (
            <ErrorBoundry>
