@@ -3,21 +3,10 @@ import React, { Component } from 'react';
 import './item-list.css';
 import SwapiService from '../../services/swapi-service';
 import Spinner from '../spinner'
+import withData from '../hoc-helper'
 
-export default class ItemList extends Component {
 
-  state = {
-    itemList : null
-  }
-  
-  swapiService = new SwapiService();
-
-  componentDidMount () {
-    this.props.getData()
-      .then(itemList => {
-        this.setState({itemList})
-      })
-  }
+ class ItemList extends Component {
 
   renderItems (arr) {
     return arr.map(item => {
@@ -36,12 +25,8 @@ export default class ItemList extends Component {
 
   render() {
 
-    const {itemList} = this.state;
-    if (!itemList) {
-      return <Spinner/>
-    }
-    
-    const listItems = this.renderItems(itemList);
+    const {data}  = this.props;
+    const listItems = this.renderItems(data);
 
     return (
       <ul className="item-list list-group">
@@ -50,3 +35,8 @@ export default class ItemList extends Component {
     );
   }
 }
+
+
+const {getAllPeople} = new SwapiService();
+
+export default withData(ItemList, getAllPeople);

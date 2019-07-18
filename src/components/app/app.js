@@ -49,13 +49,19 @@ class App extends React.Component {
                             <Record field='diameter' label='Diameter'  />
 
                             </ItemDetails>
+    const peopleList = (<ItemList onItemSelected={this.onItemSelected} 
+                                  getData={this.swapiService.getAllPeople} >
+
+                            {(i) => `${i.name} (${i.birthYear})`}
+
+                            </ItemList>);
 
     return (
       <div>
         <Header />
         <RandomPlanet />
 
-        <Row leftContent={personDetails} rightContent={planetDetails} />
+        <Row leftContent={peopleList} rightContent={personDetails} />
        
       </div>
     );
