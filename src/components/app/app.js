@@ -11,6 +11,7 @@ import SwapiService from '../../services/swapi-service';
 import Row from '../row';
 import ItemDetails from '../item-details';
 import {Record} from '../item-details'
+import { PeopleList, StarshipList,PlanetList, PersonDetails, PlanetDetails, StarshipDetails } from '../sw-components'
 
 class App extends React.Component {
 
@@ -33,28 +34,12 @@ class App extends React.Component {
     }
     const {getPerson,getPlanet, getPersonImage,getPlanetImage} = this.swapiService;
 
-    const personDetails = (<ItemDetails 
-                            itemId={5}
-                            getData={getPerson}
-                            getImage={getPersonImage}
-                             > 
-                              <Record field='name' label='Name'  />
-                              <Record field='gender' label='Gender'  />
-                            </ItemDetails>) 
-    const planetDetails = <ItemDetails 
-    itemId={3}
-                            getData={getPlanet}
-                            getImage={getPlanetImage} >
-                            <Record field='name' label='Name'  />
-                            <Record field='diameter' label='Diameter'  />
-
-                            </ItemDetails>
-    const peopleList = (<ItemList onItemSelected={this.onItemSelected} 
-                                  getData={this.swapiService.getAllPeople} >
-
-                            {(i) => `${i.name} (${i.birthYear})`}
-
-                            </ItemList>);
+    const personDetails = <PersonDetails itemId={3} />
+    const peopleList = <PeopleList>{(i) => `${i.name} (${i.birthYear})`}</PeopleList>
+    const starshipDetails = <StarshipDetails itemId={3} />
+    const starshipList = <StarshipList>{(i) => `${i.name}`}</StarshipList>
+    const planetDetails = <PlanetDetails itemId={3} />
+    const planetList = <PlanetList>{(i) => `${i.name}`}</PlanetList>
 
     return (
       <div>
@@ -62,6 +47,8 @@ class App extends React.Component {
         <RandomPlanet />
 
         <Row leftContent={peopleList} rightContent={personDetails} />
+        <Row leftContent={planetList} rightContent={planetDetails} />
+        <Row leftContent={starshipList} rightContent={starshipDetails} />
        
       </div>
     );
