@@ -3,7 +3,7 @@ import React from 'react';
 import Header from '../header';
 import RandomPlanet from '../random-planet';
 import ItemList from '../item-list';
-import PersonDetails from '../person-details';
+import PersonDetails from '../item-details';
 
 import './app.css';
 import ErrorButton from '../error-button';
@@ -32,14 +32,26 @@ class App extends React.Component {
     if (this.state.hasError) {
       return <ErrorIndicator/>
     }
+    const {getPerson,getPlanet, getPersonImage,getPlanetImage} = this.swapiService;
+
+    const personDetails = <ItemDetails 
+                            itemId={3}
+                            getData={getPerson}
+                            getImage={getPersonImage}
+                             />
+    const planetDetails = <ItemDetails 
+                            itemId={3}
+                            getData={getPlanet}
+                            getImage={getPlanetImage}
+                             />
 
     return (
       <div>
         <Header />
         <RandomPlanet />
-        <ErrorButton/>
 
-        <PeoplePage/>
+        <Row leftContent={personDetails} rightContent={planetDetails} />
+       
       </div>
     );
   }

@@ -1,49 +1,54 @@
 import React, { Component } from 'react';
 
-import './person-details.css';
+import './item-details.css';
 import SwapiService from '../../services/swapi-service';
 import Spinner from '../spinner';
+import ErrorButton from '../error-button';
 
-export default class PersonDetails extends Component {
+export default class ItemDetails extends Component {
 
   state = {
-    person: null,
-    loading: false
+    item: null,
+    loading: false,
+    image: null
   }
 
   componentDidMount() {
-    this.updatePerson();
+    this.updateItem();
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.personId !== prevProps.personId) {
-      this.updatePerson();
+    if (this.props.itemId !== prevProps.itemId) {
+      this.updateItem();
     }
   }
 
   swapiService = new SwapiService();
 
-  updatePerson () {
-    let {personId = 1} = this.props;
-    if (!personId) {
-      personId = 1
+  updateItem () {
+    let {itemId = 1, getData, getImage} = this.props;
+    if (!itemId) {
+      itemId = 1
     }
+
     this.setState({loading: true});
-    this.swapiService.getPerson(personId)
-      .then(person => {
-        this.setState({person, loading: false})
+
+    getData(itemId)
+      .then(item => {
+        this.setState({
+                      item, loading: false,
+                      image: getImage(item)})
       })
   }
 
   render() {
-    if (!this.state.person || this.state.loading) {
+    if (!this.state.item || this.state.loading) {
       return(<Spinner/>)
     }
-    const {person:{id, name, gender, birthYear, eyeColor}} = this.state;
+    const {item:{id, name, gender, birthYear, eyeColor},image} = this.state;
     return (
       <div className="person-details card">
-        <img className="person-image"
-          src={`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`} />
+        <img className="person-image" alt='Item' src={image} />
 
         <div className="card-body">
           <h4>{name}</h4>
@@ -61,6 +66,7 @@ export default class PersonDetails extends Component {
               <span>{eyeColor}</span>
             </li>
           </ul>
+        <ErrorButton/>
         </div>
       </div>
     )

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PersonDetails from '../person-details';
+import PersonDetails from '../item-details';
 import ItemList from '../item-list';  
 
 
