@@ -4,8 +4,6 @@ import ItemList from '../item-list';
 
 
 import './people-page.css';
-import ErrorButton from '../error-button';
-import ErrorIndicator from '../error-indicator';
 import SwapiService from '../../services/swapi-service';
 import Row from '../row';
 import ErrorBoundry from '../error-boundry';
