@@ -6,6 +6,9 @@ import ItemList from '../item-list';
 import './people-page.css';
 import ErrorButton from '../error-button';
 import ErrorIndicator from '../error-indicator';
+import SwapiService from '../../services/swapi-service';
+import Row from '../row';
+import ErrorBoundry from '../error-boundry';
 
 export default class PeoplePage extends Component {
   
@@ -14,10 +17,9 @@ export default class PeoplePage extends Component {
     hasError: false
   }
 
-  componentDidCatch (error, info) {
-    console.error('Information of error:', info);
-    this.setState({hasError: true});
-  }
+  swapiService = new SwapiService();
+
+
 
   onItemSelected = (id) =>{
     this.setState({itemSelected: id})
@@ -32,17 +34,10 @@ export default class PeoplePage extends Component {
     }
 
     return (
-      <React.Fragment>
-        <div className="row mb2">
-          <div className="col-md-6">
-            <ItemList onItemSelected={this.onItemSelected} />
-          </div>
-          <div className="col-md-6">
-            <PersonDetails personId={this.state.itemSelected} />
-            <ErrorButton/>
-          </div>
-        </div>
-      </React.Fragment>
+           <ErrorBoundry>
+             <Row leftContent={peopleList} rightContent={personDetails} /> 
+           </ErrorBoundry>
+            
     )
   }
 }

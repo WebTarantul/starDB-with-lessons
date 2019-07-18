@@ -9,12 +9,17 @@ import './app.css';
 import ErrorButton from '../error-button';
 import ErrorIndicator from '../error-indicator';
 import PeoplePage from '../people-page/people-page';
+import SwapiService from '../../services/swapi-service';
+import Row from '../row';
+import ItemDetails from '../item-details';
 
 class App extends React.Component {
 
   state = {
     hasError: false
   }
+
+  swapiService = new SwapiService();
 
   componentDidCatch (error, info) {
     console.error('Information of error:', info);
