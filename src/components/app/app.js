@@ -5,7 +5,6 @@ import RandomPlanet from '../random-planet';
 
 import './app.css';
 import ErrorIndicator from '../error-indicator';
-import PeoplePage from '../people-page/people-page';
 import SwapiService from '../../services/swapi-service';
 import Row from '../row';
 import { PeopleList, StarshipList,PlanetList, PersonDetails, PlanetDetails, StarshipDetails } from '../sw-components'
@@ -18,7 +17,7 @@ class App extends React.Component {
 
   swapiService = new SwapiService();
 
-  componentDidCatch (error, info) {
+  componentDidCatch (e, info) {
     console.error('Information of error:', info);
     this.setState({hasError: true});
   }
@@ -31,11 +30,11 @@ class App extends React.Component {
     }
 
     const personDetails = <PersonDetails itemId={3} />
-    const peopleList = <PeopleList>{(i) => `${i.name} (${i.birthYear})`}</PeopleList>
+    const peopleList = <PeopleList/>
     const starshipDetails = <StarshipDetails itemId={3} />
-    const starshipList = <StarshipList>{(i) => `${i.name}`}</StarshipList>
+    const starshipList = <StarshipList/>
     const planetDetails = <PlanetDetails itemId={3} />
-    const planetList = <PlanetList>{(i) => `${i.name}`}</PlanetList>
+    const planetList = <PlanetList/>
 
     return (
       <div>
