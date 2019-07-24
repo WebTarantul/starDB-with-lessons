@@ -6,11 +6,8 @@ const {getAllPeople} = new SwapiService();
 
 const renderPeopleList = (i) => `${i.name}`;
 
-const PeopleList = 
-  withData(withChildFunction(ItemList,renderPeopleList), getAllPeople);
-// const PeopleList = withChildFunction(
-//   withData(ItemList, getAllPeople),
-//   renderPeopleList
-// );
+const PeopleList = withData(
+                    withChildFunction(ItemList,renderPeopleList), 
+                      getAllPeople);
 
 export default PeopleList;

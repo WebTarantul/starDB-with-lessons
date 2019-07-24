@@ -8,6 +8,8 @@ import ErrorIndicator from '../error-indicator';
 import SwapiService from '../../services/swapi-service';
 import Row from '../row';
 import { PeopleList, StarshipList,PlanetList, PersonDetails, PlanetDetails, StarshipDetails } from '../sw-components'
+import {SwapiServiceProvider} from '../swapi-service-context';
+
 
 class App extends React.Component {
 
@@ -37,15 +39,18 @@ class App extends React.Component {
     const planetList = <PlanetList/>
 
     return (
-      <div>
-        <Header />
-        <RandomPlanet />
-
-        <Row leftContent={peopleList} rightContent={personDetails} />
-        <Row leftContent={planetList} rightContent={planetDetails} />
-        <Row leftContent={starshipList} rightContent={starshipDetails} />
+      <React.Fragment>
+        
+        <SwapiServiceProvider value={this.swapiService} >
+          <Header />
+          <RandomPlanet />
+  
+          <Row leftContent={peopleList} rightContent={personDetails} />
+          <Row leftContent={planetList} rightContent={planetDetails} />
+          <Row leftContent={starshipList} rightContent={starshipDetails} />
+        </SwapiServiceProvider>
        
-      </div>
+      </React.Fragment>
     );
   }
 }
